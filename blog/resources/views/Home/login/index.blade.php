@@ -19,14 +19,16 @@
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 	<style type="text/css">
-	    /*.form-group{padding-top: 10px}*/
-/*	    .my-name{border: 1px solid red;height: 25px;}*/
 	    span{font-size: 5px;color: #989898}
+	    #spna{font-size:5px;color:red;}
+	    .red{color:red;}
+	    #forget a:hover{color:orange;}
 	</style>
 
 
 
 	<!-- Animate.css -->
+	<link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('/Home/login/css/animate.css')}}">
 	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="{{asset('/Home/login/css/icomoon.css')}}">
@@ -37,6 +39,11 @@
 
 	<!-- Magnific Popup -->
 	<link rel="stylesheet" href="{{asset('/Home/login/css/magnific-popup.css')}}">
+
+	<!--Public-->
+	<link rel="stylesheet" href="{{asset('/Home/login/Public/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('/Home/login/Public/js/bootstrap.min.js')}}">
+	<link rel="stylesheet" href="{{asset('/Home/login/Public/js/jq.js')}}">
 
 	<!-- Owl Carousel  -->
 	<link rel="stylesheet" href="{{asset('/Home/login/css/owl.carousel.min.css')}}">
@@ -54,107 +61,191 @@
 
 	</head>
 	<body>
-
-	<div class="gtco-loader"></div>
-
 	<div id="page">
 
-
-	<div class="page-inner">
-	<nav class="gtco-nav" role="navigation">
+	<div class="page-inner" style="">
+	<nav class="gtco-nav" role="navigation"  >
 		<div class="gtco-container">
 
-			<div class="row">
-				<div class="col-sm-4 col-xs-12">
-					<div id="gtco-logo"><a href="index.html">Splash <em>.</em></a></div>
-				</div>
-				<div class="col-xs-8 text-right menu-1">
-					<ul>
-						<li><a href="features.html">Features</a></li>
-						<li><a href="tour.html">Tour</a></li>
-						<li class="has-dropdown">
-							<a href="#">Dropdown</a>
-							<ul class="dropdown">
-								<li><a href="#">Web Design</a></li>
-								<li><a href="#">eCommerce</a></li>
-								<li><a href="#">Branding</a></li>
-								<li><a href="#">API</a></li>
-							</ul>
-						</li>
-						<li><a href="pricing.html">Pricing</a></li>
-						<li><a href="contact.html">Contact</a></li>
-						<li class="btn-cta"><a href="#"><span>Get started</span></a></li>
-					</ul>
-				</div>
+			<div class="row" style="position:absolute; z-index:1;">
+
+					<div id="gtco-logo"><a href="{{url('')}}">商 城 首 页 <em>.</em></a></div>
+
 			</div>
 
 		</div>
-	</nav>
 
-	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url('{{asset('/Home/login/images/img_4.jpg')}}')">
+
+	</nav>
+	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url('{{asset('/Home/login/images/img_4.jpg')}}');">
+
+    <!--判断用户名，手机号不存在，密码错误返回值，在页面显示错误提示-->
+    @if(!empty(session('erro')))
+        <div class="alert alert-danger alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align: center"> {{session('erro')}}</div>
+    @endif
+
+    <!--注册成功提示-->
+    @if(!empty(session('success')))
+        <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">
+        {{session('success')}}</div>
+            <script type="text/javascript">
+                //3秒后清除提示样式
+                setTimeout(function () {
+        	         $('.alter-register-tip').remove();
+                },3000);
+            </script>
+    @endif
+		<!--登录成功提示-->
+    @if(!empty(session('login')))
+        <div class="alert alert-success alter-register-tip" style="position: relative;z-index: 2;width: 100%;height: 50px;text-align:center">
+        {{session('login')}}</div>
+            <script type="text/javascript">
+                //3秒后清除提示样式
+                setTimeout(function () {
+        	         $('.alter-register-tip').remove();
+									 window.location.replace('{{url("/")}}')
+                },3000);
+            </script>
+    @endif
+
+    <!--表单验证错误提示-->
+    @if ($errors->any())
+        <div class="alert alert-danger" style="position: relative;z-index: 2;width: 100%;height: auto;text-align:center">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+    <script type="text/javascript">
+        //提交后返回错误值提示，定时器3秒后清除
+        setTimeout(function () {
+        	$('.alert-danger').remove();
+        },5000);
+    </script>
 		<div class="overlay"></div>
 		<div class="gtco-container">
 			<div class="row">
 				<div class="col-md-12 col-md-offset-0 text-left">
 
 
-					<div class="row row-mt-15em">
-						<div class="col-md-5 mt-text animate-box " data-animate-effect="fadeInUp">
+					<div class="row row-mt-15em" >
+						<div class="col-md-5 mt-text animate-box " data-animate-effect="fadeInUp" >
 							<span class="intro-text-small">Welcome to Splash</span>
 							<h1>Build website using this template.</h1>
 						</div>
-						<div class="col-md-5  animate-box col-md-offset-2" data-animate-effect="fadeInRight">
+						<div class="col-md-5  animate-box col-md-offset-2" data-animate-effect="fadeInRight" >
 							<div class="form-wrap" >
 								<div class="tab">
 									<ul class="tab-menu">
-										<li class="active gtco-first"><a href="#" data-tab="signup">注册</a></li>
-										<li class="gtco-second"><a href="#" data-tab="login">登录</a></li>
+										<li class="active gtco-first"><a href="#" data-tab="signup">登录</a></li>
+										<li class="gtco-second"><a href="#" data-tab="login">注册</a></li>
 									</ul>
-									<div class="tab-content" >
-										<div class="tab-content-inner active form-horizontal" data-content="signup">
-											<form action="#">
-												<div class="form-group" >
+									<div class="tab-content form-horizontal" >
+										<div  class="tab-content-inner active " data-content="signup">
+
+											<form action="{{url('/dologin')}}" id="dologin" method="post">
+											    {{csrf_field()}}
+
+												<div class="form-group has-feedback" >
+
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">用户名</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="text" name="username" class="form-control" id="inputEmail3" placeholder="请输入你的用户名"  aria-describedby="inputSuccess2Status">
+													        <span id="username" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
+													    </div>
+													    <div class="my-username col-md-12" >
+														   <span></span>
+														</div>
+												</div>
+												<div class="form-group has-feedback" >
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">密码</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="password" name="userpass" class="form-control" id="inputEmail3" placeholder="请输入你的用户名"  aria-describedby="inputSuccess2Status">
+													        <span id="userpass" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
+													    </div>
+													    <div class="my-userpass col-md-12" >
+														   <span></span>
+														</div>
+												</div>
+												<div id="forget" class="col-md-12" style="float:right;color:orange;cursor: pointer;">
+												    <div ><a href="{{url('/forget')}}">?忘记密码</a></div>
+												</div>
+												<div class="row form-group">
+													<div class="col-md-12">
+														<input type="submit" class="btn btn-primary col-md-12" value="登录">
+													</div>
+												</div>
+											</form>
+
+										</div>
+
+										<div class="tab-content-inner form-horizontal" data-content="login">
+											<form action="{{url('/doregister')}}" id="doregister" method="post">
+											    {{csrf_field()}}
+												<div class="form-group has-feedback" >
+
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">用户名</label>
 													    </div>
 													    <div class="col-md-9 ">
 													        <input type="text" name="uname" class="form-control" id="inputEmail3" placeholder="请输入你的用户名"  aria-describedby="inputSuccess2Status">
+													        <span id="uname" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
 													    </div>
-													    <div class="my-name col-md-12" >
+													    <div class="my-uname col-md-12" >
 														   <span></span>
 														</div>
 												</div>
-
-												<div class="form-group">
+												<div class="form-group has-feedback">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">密码</label>
 													    </div>
 													    <div class="col-md-9 ">
 													        <input type="password" name="upass" class="form-control" id="inputEmail3" placeholder="请输入密码">
+													        <span id="upass" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
 													    </div>
-													    <div class="my-pass col-md-12" >
+													    <div class="my-upass col-md-12" >
 														   <span></span>
 														</div>
 												</div>
-												<div class="form-group">
+												<div class="form-group  has-feedback">
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">确认密码</label>
 													    </div>
 													    <div class="col-md-9 ">
-													        <input type="password" name="unpass" class="form-control" id="inputEmail3" placeholder="请再次输入密码">
+													        <input type="password" name="repeatpass" class="form-control" id="inputEmail3" placeholder="请再次输入密码">
+													        <span id="repeatpass" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
 													    </div>
-													    <div class="my-unpass col-md-12" >
+													    <div class="my-repeatpass col-md-12" >
+														   <span></span>
+														</div>
+												</div>
+												<div class="form-group has-feedback">
+													    <div class="col-md-3">
+													        <label for="inputEmail3" class=" control-label">手机号</label>
+													    </div>
+													    <div class="col-md-9 ">
+													        <input type="num" name="uphone" class="form-control" id="inputEmail3" placeholder="建议使用常用手机">
+													        <span id="uphone" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="color: green;display: none"></span>
+													    </div>
+													    <div class="my-uphone col-md-12" >
 														   <span></span>
 														</div>
 												</div>
 												<div class="form-group">
 													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">手机号</label>
+													        <label for="inputEmail3" class=" control-label">手机验证</label>
 													    </div>
-													    <div class="col-md-9 ">
-													        <input type="text" name="uphone" class="form-control" id="inputEmail3" placeholder="建议使用常用手机">
+													    <div class="col-md-5 ">
+													        <input type="num" name="phonecode" class="form-control" id="inputEmail3" placeholder="手机验证码">
 													    </div>
-													    <div class="my-phone col-md-12" >
+													    <div id="my-phonecode" style="width: 120px;height: 40px;background: #F5F5F5;cursor: pointer;" class="col-md-4 " onclick="makePhoneCode()">
+													        <span style="font-size: 17px;line-height: 40px">获取验证码</span>
+													    </div>
+													    <div class="my-phonecode col-md-12" >
 														   <span></span>
 														</div>
 												</div>
@@ -162,57 +253,25 @@
 													    <div class="col-md-3">
 													        <label for="inputEmail3" class=" control-label">验证码</label>
 													    </div>
-													    <div class="col-md-9 ">
-													        <input type="text" name="ucode" class="form-control" id="inputEmail3" placeholder="请输入验证码">
+													    <div class="col-md-5 ">
+													        <input type="num" name="ucode" class="form-control" id="inputEmail3" placeholder="请输入验证码">
 													    </div>
-													    <div class="my-code col-md-12" >
+												        <div class="form-group col-md-4 ">
+												            <img src="{{url('/makecode')}}" alt="" onclick="this.src=this.src+'?'+Math.random()" style="cursor: pointer;width: 120px;height: 40px">
+												        </div>
+													    <div class="my-ucode col-md-12" >
 														   <span></span>
 														</div>
 												</div>
-												<div class="form-group">
-													    <div class="col-md-3">
-													        <label for="inputEmail3" class=" control-label">邮箱</label>
-													    </div>
-													    <div class="col-md-9 ">
-													        <input type="email" name="uemail" class="form-control" id="inputEmail3" placeholder="建议使用常用邮箱">
-													    </div>
-													    <div class="my-email col-md-12" >
+												<div id="forget" class="col-md-12" style="float:right;color:orange;cursor: pointer;">
+												    <div class="col-md-8"><input type="checkbox" name="check" checked ><span style="color:black;font-size: 15px">服务条款</span></div>
+												</div>
+												<div class="my-check col-md-12" >
 														   <span></span>
-														</div>
 												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
-														<input type="submit" class="btn btn-primary col-md-12" value="注册">
-													</div>
-												</div>
-											</form>
-										</div>
-
-										<div class="tab-content-inner" data-content="login">
-											<form action="#">
-												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="username">用户名</label>
-														<input type="text" name="name" class="form-control" id="username" placeholder="请输入你的用户名">
-													</div>
-													<div class="my-uname col-md-12" >
-														   <span></span>
-													</div>
-												</div>
-
-												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="password">密码</label>
-														<input type="password" name="pass" class="form-control" id="password" placeholder="请输入你的密码">
-													</div>
-													<div class="my-upass col-md-12" >
-														   <span></span>
-													</div>
-												</div>
-
-												<div class="row form-group">
-													<div class="col-md-12">
-														<input type="submit" class="btn btn-primary col-md-12" value="登录">
+														<input type="submit"  class="btn btn-primary col-md-12" value="注册">
 													</div>
 												</div>
 											</form>
@@ -230,7 +289,7 @@
 		</div>
 	</header>
 
-	<div class="gtco-section border-bottom">
+	<div class="gtco-section border-bottom" >
 		<div class="gtco-container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
@@ -317,7 +376,7 @@
 		</div>
 	</div>
 
-	<div id="gtco-features" class="border-bottom">
+	<div id="gtco-features" class="border-bottom" >
 		<div class="gtco-container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
@@ -404,7 +463,7 @@
 		</div>
 	</div>
 
-	<div id="gtco-counter" class="gtco-section">
+	<div id="gtco-counter" class="gtco-section" >
 		<div class="gtco-container">
 
 			<div class="row">
@@ -459,7 +518,7 @@
 		</div>
 	</div>
 
-	<div id="gtco-products">
+	<div id="gtco-products" >
 		<div class="gtco-container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
@@ -485,10 +544,7 @@
 			</div>
 		</div>
 	</div>
-
-
-
-	<div id="gtco-subscribe">
+	<div id="gtco-subscribe" >
 		<div class="gtco-container">
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
@@ -514,7 +570,7 @@
 		</div>
 	</div>
 
-	<footer id="gtco-footer" role="contentinfo">
+	<footer id="gtco-footer" role="contentinfo" >
 		<div class="gtco-container">
 			<div class="row row-p	b-md">
 
@@ -576,7 +632,6 @@
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
-
 	<!-- jQuery -->
 	<script src="{{asset('/Home/login/js/jquery.min.js')}}"></script>
 	<!-- jQuery Easing -->
@@ -591,93 +646,333 @@
 	<script src="{{asset('/Home/login/js/jquery.countTo.js')}}"></script>
 	<!-- Magnific Popup -->
 	<script src="{{asset('/Home/login/js/jquery.magnific-popup.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/layer/layer.js')}}"></script>
 	<script src="{{asset('/Home/login/js/magnific-popup-options.js')}}"></script>
 	<!-- Main -->
 	<script src="{{asset('/Home/login/js/main.js')}}"></script>
 
 	<script type="text/javascript">
-	    var name = $('input[name="uname"]').val();
-	    var pass = $('input[name="upass"]').val();
-	    var npass = $('input[name="unpass"]').val();
-	    var code = $('input[name="ucode"]').val();
-	    var email = $('input[name="uemail"]').val();
-	    var phone = $('input[name="uphone"]').val();
 
-        //用户名判断
-        $('input[name="uname"]').on('focus',function () {
-        	$('.my-name').html('<span>支持中文、字母、数字、"_"组合，4-20个字符</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-name').html('');
+	//初始化字段值
+	var username = false;
+	var userpass = false
+	var uname = false;
+	var upass = false;
+	var repeatpass = false;
+	var uphone = false;
+	var phonecode = false;
+	var ucode = false;
+	var check = false;
+
+   //用户名判断
+   $('input[name="uname"]').on('focus', function () {
+    var type = 'uname';
+    var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
+    var array = [
+        '支持中文、字母、数字、"_"组合，2-20个字符',
+        '必须是中文、字母、数字、"_"组合，2-20个字符',
+    ]
+    var test = false;
+    var flat = false;
+    var status = 1000;
+    varildate (type, array, test, flat, match, status);
+   });
+
+    //密码判断
+    $('input[name="upass"]').on('focus', function () {
+     var type = 'upass';
+     var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+     var array = [
+        	'建议字母、数字2种字符组合，6-20个字符',
+        	'不能是纯字母、数字组合，6-20个字符',
+     ]
+     var test = false;
+     var flat = true;
+     varildate (type, array, test, flat, match);
+    });
+
+    //确认密码判断
+    $('input[name="repeatpass"]').on('focus', function () {
+    //获取焦点时给出提示
+    $('.my-repeatpass').html('<span>请再次输入密码</span>');
+        $('#repeatpass').css('display','none');
+        $('input[name="repeatpass"]').css('border','2px solid #E4E4E4');
+    }).on('blur', function (){
+		//失去焦点时判断
+		repeatpass = $('input[name="repeatpass"]').val();
+		upass = $('input[name="upass"]').val();console.log()
+	    if (repeatpass == '') {
+	    	//值为空时隐藏提示
+	    	$('.my-repeatpass').html('');
+	    } else if (repeatpass != upass) {
+	    	//判断密码是否一致
+	    	$('.my-repeatpass').html('<span style="color:red">请输入一致的密码</span>');
+	    	$('input[name="repeatpass"]').css('border','2px solid red')
+	    } else {
+	    	//验证通过
+	     	$('.my-repeatpass').html('');
+	     	$('#repeatpass').css('display','block');
+	    }
+	})
+
+    //手机号判断
+    $('input[name="uphone"]').on('focus', function () {
+    	var type = 'uphone';
+    	var match = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
+    	var array = [
+    	    '请输入手机号',
+    	    '手机号格式不正确',
+    	]
+    	var test = false;
+    	var flat = false;
+    	var status = 1001;
+    	varildate (type, array, test, flat, match, status);
+    });
+
+    //手机验证码判断
+    $('input[name="phonecode"]').on('focus', function () {
+    	var type = 'phonecode';
+    	var match = /[0-9]/;
+    	var array = [
+    	    '请输入手机号',
+    	    '请输入4位有效数字',
+    	];
+    	var test = false;
+    	var flat = true;
+    	varildate (type, array, test, flat, match);
+    });
+
+    //获取手机验证码
+     function makePhoneCode() {
+     	phoneTime(60);
+    	var  uphone = $('input[name="uphone"]').val();
+    	if (uphone == '') {
+    		dotest('uphone', '请先输入手机号！', 'red');
+    	} else {
+    		$.ajax({
+    			type : 'post',
+    			url  : "{{url('/phonecode')}}",
+    			data : 'uphone='+uphone+'&_token={{csrf_token()}}',
+    			success:function(data) {
+    				if (data.status == 1200) {
+    					dotest('phonecode',data.msg,'red');
+    				}
+    			},
+    			dataType: 'json'
+    		});
+    	}
+    }
+
+    //验证码判断
+    $('input[name="ucode"]').on('focus', function () {
+    	var type = 'ucode';
+    	var match = /[0-9A-Za-z]/
+    	var array = [
+    	    '请输入验证码',
+    	    '看清楚？',
+    	]
+    	var test = false;
+    	var flat = true;
+    	varildate (type, array, test, flat, match);
+    });
+
+    //登录判断
+    //用户名是否存在
+    $('input[name="username"]').on('focus', function () {
+    	var type = 'username';
+    	var match = /^[a-zA-Z0-9\u4E00-\u9FA5]{2,20}$/;
+    	var array = [
+    	    '请输入用户名',
+    	    '非法名字',
+    	]
+    	var flat = false;
+    	var test = false;
+    	var status = 1002;
+    	varildate (type, array, test, flat, match, status);
+    });
+
+    //密碼判斷
+    $('input[name="userpass"]').on('focus', function () {
+    	var type = 'userpass';
+    	var match = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+    	var array = [
+    	    '请输入密碼',
+    	    '密码格式错误',
+    	]
+    	var test = false;
+    	var flat = true;
+    	varildate (type, array, test, flat, match);
+    });
+
+    //验证是否同意服务条款
+    $('input[name="check"]').change(function () {
+	    if ($('input[name="check"]').prop('checked')) {
+	    		check = false;
+	    	} else {
+	    		check = true;
+	    }
+    });
+
+    //注册提交时验证
+    $("#doregister").submit(function() {
+    	if(!uname) {
+    		dotest('uname', '请输入用户名！', 'red');
+    		return false;
+    	} else if (!upass) {
+    		dotest('upass', '请输入密码！', 'red');
+    		return false;
+    	} else if (!repeatpass) {
+    		dotest('repeatpass', '请输入密码！', 'red');
+    		return false;
+    	} else if (!uphone) {
+    		dotest('uphone', '请输入手机号！', 'red');
+    		return false;
+    	} else if (!phonecode) {
+    		dotest('phonecode', '请输入手机验证码！', 'red');
+    		return false;
+    	} else if (!ucode) {
+    		dotest('ucode', '请先输入验证码！', 'red');
+    		return false;
+    	} else if (check) {
+    		layer.alert('不同意服务条款不能进行注册！')
+    		return false;
+    	} else {
+    		return true;
+    	}
+    });
+
+    //登录时验证值
+    $("#dologin").submit(function(){
+    	if(!username) {
+    		dotest('username', '请先输入用户名！', 'red');
+    		return false;
+    	} else if (!userpass) {
+    		dotest('userpass', '请先输入密码！', 'red');
+    		return false;
+    	} else {
+    		return true;
+    	}
+	});
+
+    /**
+     * 错误提示
+     * @param  {string} name   [字段名]
+     * @param  {string} str    [提示内容]
+     * @param  {string} color  [颜色：定义一个red类为红色，默认为#E4E4E4]
+     */
+    function dotest(name, str, color='#E4E4E4') {
+    	//获得焦点给出格式提示
+        $('input[name="'+name+'"]').css('border','2px solid '+color);
+        //清除成功提示
+        $('#'+name).css('display', 'none');
+        //给边框颜色，三元运算符：ture为红色，false为#E4E4E4
+    	$('.my-'+name).html(color=='red'?'<span class="'+color+' glyphicon glyphicon-minus-sign">'+str+'</span>':'<span class="'+color+'">'+str+'</span>');
+        $('input[name="'+name+'"]').on('blur', function (){
+    	    //失去焦点获取字段值
+    	    value = $('input[name="'+name+'"]').val();
+            if (value == '') {
+                //字段值为空清除提示
+                $('.my-'+name).html('');
             }
-
         })
+    }
 
-        //密码判断判断
-        $('input[name="upass"]').on('focus',function () {
-        	$('.my-pass').html('<span>建议使用字母、数字2种组合，6-12个字符</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-pass').html('');
-            }
+    /**
+     * 注册登录，提示，正则，ajax封装
+     * @param  {string}  type   [字段名（input中name的名字）]
+     * @param  {array}   array  [0=>'格式提示内容',1=>'正则错误提示内容']
+     * @param  {Boolean} test   [控制正则判断是否运行,true为禁用状态,反之]
+     * @param  {Boolean} flat   [控制ajax是否运行,true为禁用状态,反之]
+     * @param  {String}  match  [正则规则]
+     * @param  {String}  status [错误类型状态码]
+     * @return {bool}           [全部验证通过返回ture,反之false]
+     */
+    function varildate (type, array, test=true, flat=true, match='', status='') {
+    	//获取焦点时
+    	//给出格式提示
+    	$('.my-'+type).html('<span>'+array[0]+'</span>');
+    	$('input[name="'+type+'"]').css('border','2px solid #E4E4E4');
+    	$('#'+type).css('display', 'none'); //清除成功时提示
+        $('input[name="'+type+'"]').on('blur', function () {
+        	//失去焦点时
+        	//获取用户输入数据
+        	var myname = $('input[name="'+type+'"]').val();
+        	$('#'+type).css('display','none');
+        	//清除格式提示
+        	$('.my-'+type).html('');
+
+        	if (myname == '') {
+        		//值为空把获取焦点时给出的格式提示和成功提示清除
+        		$('.my-'+type).html('');
+        		$('#'+type).css('display','none');
+        	}
+            //test=false并且字段值不为空执行正则判断
+        	if (!test && myname != '') {
+        	    //用户名正则判断
+        	    $('#'+type).css('display','none');
+        		//不符合正则判断，给出错误提示,红边框
+        		if ( !(match).test(myname) ) {
+        			$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+array[1]+'</span>');
+        			$('input[name="'+type+'"]').css('border','2px solid red');
+        			return;
+        		}
+        	}
+            //flat=false并且字段值不为空执行ajax
+        	if(!flat && myname != ''){
+        		//清除样式
+        		$('#'+type).css('display','none');
+	        	$.ajax({
+	        		type : 'post',
+	        		url  : "{{url('/existence')}}",
+	        		data : type+'='+myname+'&_token={{csrf_token()}}',
+	        		success:function(data) {
+	        			//返回状态码
+	        			if (data.status == status) {
+	        				//根据状态码给出错误信息提示
+	        				$('.my-'+type).html('<span class="red glyphicon glyphicon-minus-sign">'+data.msg+'</span>');
+	        			    $('input[name="'+type+'"]').css('border','2px solid red');
+	        			} else {
+	        				//验证通过
+	        				$('#'+type).css('display','block');
+	        				//改变字段名初始化的值
+	        				eval(type +'='+ true);
+	        				return;
+	        			}
+	        		}
+	        	});
+        	}
+        	//input 值不为空 同时禁用ajax才运行
+        	if (myname != '' && flat == true) {
+        		//验证通过，给出成功提示，同时清除格式提示和红边框
+        	    $('#'+type).css('display','block');
+                $('.my-'+type).html('');
+                $('input[name="'+type+'"]').css('border','2px solid #E4E4E4');
+                //改变字段名初始化的值
+                eval(type +'='+ true);
+                return;
+        	}
         })
+    }
 
-        //确认密码判断
-        $('input[name="unpass"]').on('focus',function () {
-        	$('.my-unpass').html('<span>请再次输入密码</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-unpass').html('');
-            }
-        })
-
-        //手机号判断
-        $('input[name="uphone"]').on('focus',function () {
-        	$('.my-phone').html('<span>验证通过可以使用该手机找回密码和登录</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-phone').html('');
-            }
-        })
-
-        //验证码判断
-        $('input[name="ucode"]').on('focus',function () {
-        	$('.my-code').html('<span>?看不清，点击图片更换验证码</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-code').html('');
-            }
-        })
-
-        //邮箱判断
-        $('input[name="uemail"]').on('focus',function () {
-        	$('.my-email').html('<span>建议使用常用邮箱</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-email').html('');
-            }
-        })
-
-
-         //登录验证
-        //邮箱判断
-        $('input[name="name"]').on('focus',function () {
-        	$('.my-uname').html('<span>请输入用户名</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-uname').html('');
-            }
-        })
-
-        //邮箱判断
-        $('input[name="pass"]').on('focus',function () {
-        	$('.my-upass').html('<span>请输入密码</span>');
-        }).on('blur',function (){
-            if(name == '') {
-            	$('.my-upass').html('');
-            }
-        })
+    //获取手机验证码时定时器
+    function phoneTime (time) {
+    	//设置周期定时器
+    	var id = setInterval(function () {
+    		//自减
+    		time--;
+    		//倒计时提示
+    		$('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">稍等('+time+')秒</spna>');
+    		//禁用click事件
+    		$('#my-phonecode').removeAttr("onclick");
+    		    if (time <= 0) {
+    		    	//time = 0时清除定时器
+    		        clearInterval(id);
+    		        //还原样式和事件
+    		        $('#my-phonecode').html('<span style="font-size: 17px;line-height: 40px">获取验证码</spna>');
+    		        $('#my-phonecode').attr("onclick","makePhoneCode();");
+    	        }
+    	},1000);
+    }
 	</script>
-
-	</body>
+</body>
 </html>

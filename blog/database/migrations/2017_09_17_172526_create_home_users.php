@@ -19,11 +19,14 @@ class CreateHomeUsers extends Migration
             $table->string('pass');
             $table->string('name')->nullable()->index('name');
             $table->smallInteger('sex')->nullable()->default(1);
-            $table->integer('phone');
-            $table->string('email');
-            $table->string('address')->nullable()->index('address');
+            $table->string('phone', '11');
+            $table->string('email')->nullable();
             $table->integer('score')->default(0);
             $table->smallInteger('status')->default(1);
+            $table->integer('growth')->default(0);
+            $table->integer('addtime')->nullable();
+            $table->integer('lasttime');
+            $table->timestamps();
         });
     }
 
